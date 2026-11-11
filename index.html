@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Birthday Surprise</title>
+<style>
+:root{--bg:#0b1118;--panel:#131e29;--gold:#d8b56d;--cream:#f5efdf;--muted:#aab5bf;--line:#293847}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 50% 0%,#243548 0,#0b1118 48%);color:var(--cream);font-family:Georgia,serif;min-height:100vh}
+main{max-width:900px;margin:auto;padding:28px 18px 60px}
+header{text-align:center;padding:30px 10px 22px}
+.cross{color:var(--gold);font-size:30px;letter-spacing:4px}
+.eyebrow{font:600 11px Arial,sans-serif;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin:12px}
+h1{font-size:clamp(38px,8vw,68px);line-height:1.02;margin:12px 0;color:#fff}
+.subtitle{color:var(--muted);font:15px Arial,sans-serif;line-height:1.6}
+.card{background:linear-gradient(145deg,rgba(25,39,53,.96),rgba(14,23,32,.96));border:1px solid var(--line);border-radius:22px;padding:26px;margin:18px 0;box-shadow:0 18px 55px #0005}
+h2{font-size:25px;margin:0 0 15px;color:var(--gold)}
+.message{font-size:19px;line-height:1.8;white-space:pre-wrap}
+.quote{border-left:2px solid var(--gold);padding-left:16px;color:#d7dce0;font-style:italic;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tile{border:1px solid var(--line);border-radius:16px;padding:18px;background:#0e1822}
+.tile strong{display:block;color:var(--gold);font:700 11px Arial,sans-serif;letter-spacing:2px;text-transform:uppercase;margin-bottom:9px}
+.tile span{font-size:16px;line-height:1.55;white-space:pre-wrap}
+label{display:block;font:600 12px Arial,sans-serif;color:var(--gold);letter-spacing:1px;margin:14px 0 6px}
+input,textarea{width:100%;border:1px solid #34495b;border-radius:10px;background:#0b141d;color:#fff;padding:12px;font:15px Arial,sans-serif}
+textarea{min-height:90px;resize:vertical}
+button{border:0;border-radius:999px;background:var(--gold);color:#15191e;font-weight:700;padding:13px 20px;margin:12px 8px 0 0;cursor:pointer}
+button.secondary{background:transparent;color:var(--cream);border:1px solid #536475}
+.actions{text-align:center;margin:16px 0}
+.hidden{display:none}
+footer{text-align:center;color:var(--muted);font:12px Arial,sans-serif;padding:25px 0}
+#surprise{display:none;text-align:center;font-size:20px;line-height:1.7;color:#fff}
+.spark{font-size:25px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.card{padding:20px}.message{font-size:17px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="cross">✝</div>
+  <div class="eyebrow">A little celebration for a remarkable man</div>
+  <h1>Happy Birthday,<br><span id="heroName">Champion</span>!</h1>
+  <p class="subtitle">Strength in your body. Calm confidence in your spirit.<br>A heart guided by faith.</p>
+</header>
+
+<section class="card">
+  <h2>To the man of the day</h2>
+  <div class="message" id="mainMessage">Today is all about celebrating you — your discipline, your cool energy, your kind heart, and the person you keep becoming. May this new year bring you strength for every challenge, peace in every season, and countless reasons to smile.</div>
+</section>
+
+<section class="card">
+  <h2>A few things worth celebrating</h2>
+  <div class="grid">
+    <div class="tile"><strong>🏋️ Strength</strong><span id="strengthText">May your hard work in the gym keep reminding you what dedication can achieve.</span></div>
+    <div class="tile"><strong>✝ Faith</strong><span id="faithText">May God guide your steps, protect you, and keep your faith strong.</span></div>
+    <div class="tile"><strong>😎 Your vibe</strong><span id="coolText">Keep being effortlessly cool, genuine, and uniquely you.</span></div>
+    <div class="tile"><strong>🌟 Your year ahead</strong><span id="wishText">More growth, good health, answered prayers, new wins, and unforgettable memories.</span></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>A prayer for your new year</h2>
+  <p class="quote" id="prayerText">May the Lord bless you and keep you; may His light guide your path, give you wisdom in your decisions, courage in difficult moments, and peace that stays with you. Amen.</p>
+</section>
+
+<section class="card">
+  <h2>A message just for you</h2>
+  <p class="message" id="personalText">Keep showing up for your goals, keep your faith close, and never underestimate the good you bring into the lives around you. You deserve a year as amazing as the energy you give.</p>
+  <div class="actions"><button onclick="reveal()">Open your little surprise 🎁</button></div>
+  <div id="surprise"><div class="spark">🎉 🎂 🎉</div><p id="surpriseText">May this be your strongest, happiest, most blessed chapter yet. Happy birthday!</p></div>
+</section>
+
+<section class="card" id="editor">
+  <h2>✍️ Make it personal</h2>
+  <p class="subtitle">Write your own words below. The preview updates as you type. When you're done, create a shareable link that carries your messages with it.</p>
+  <label>His name or nickname</label><input id="inName" placeholder="e.g. Daniel">
+  <label>Your opening birthday message</label><textarea id="inMain"></textarea>
+  <label>Gym / strength message</label><textarea id="inStrength"></textarea>
+  <label>Faith message</label><textarea id="inFaith"></textarea>
+  <label>Something about his cool personality</label><textarea id="inCool"></textarea>
+  <label>Your wishes for his year ahead</label><textarea id="inWish"></textarea>
+  <label>Your personal prayer</label><textarea id="inPrayer"></textarea>
+  <label>Your personal message</label><textarea id="inPersonal"></textarea>
+  <label>Final surprise message</label><textarea id="inSurprise"></textarea>
+  <label>Your name (optional)</label><input id="inFrom" placeholder="With love, ...">
+  <div class="actions">
+    <button onclick="makeLink()">Create my birthday link 🔗</button>
+    <button class="secondary" onclick="resetFields()">Reset text</button>
+  </div>
+  <p class="subtitle" id="linkStatus" aria-live="polite"></p>
+</section>
+<footer>Made with love • Faith, strength & good energy</footer>
+</main>
+<script>
+const fields = {
+ inName:"heroName", inMain:"mainMessage", inStrength:"strengthText", inFaith:"faithText",
+ inCool:"coolText", inWish:"wishText", inPrayer:"prayerText", inPersonal:"personalText",
+ inSurprise:"surpriseText"
+};
+const defaults = {
+  "inName": "Hode",
+  "inMain": "Hode, yene cake enkuan teweledklgn
+Yene wendm behiwete wust slaleh ejg destegna sew negn u see not only me best butalso my worse but u are still same person for me like a loyal, strong and best friend ena luv u so much erejm edme ysth yene ",
+  "inStrength": "Yene gbda sew gn ene atdebdbegn enji be gzfeth ene erasu kante belay emekalew, so keep work it ybelt 💪💪💪",
+  "inFaith": "May God guide your steps, protect you, and keep your faith strong.
+
+for every steps,  መድሃኒያለም አለ።",
+  "inCool": "ohhhh, u are so lovely🤣, good at managing anything, being best best friend for only me😊
+anddddd so konjyee",
+  "inWish": " i wish u get More growth, answered prayers, new wins, and unforgettable memories and endtmeta ysemerbet😡🧡, endeee ereschew endtgabzegn🍕🍟🍔🌭🥙🌮🍝🥫🍲",
+  "inPrayer": "Ende talaknete lmerkhaaaa
+Yene egziabher ytebkh
+Emebete tla kelela thunh
+Kidus mikael ena kidus gebriel kefith ykdemulh
+Yemiweduhn, yemtwedachewn hulu ytebklh
+Kber, tsegan yalbsh 🙏",
+  "inPersonal": "Tenkrlgn eshi brtt bel yaw endmeh sichemr wend nehna chanawoch ychemralu ena be ready to be winner bechirash ej endatset hulunm neger le egziaber asalfeh st ersu aytewenm eshi. Tenkrlgn  ",
+  "inSurprise": "May this be your strongest, happiest, most blessed chapter yet. Happy birthday!
+but u become old mr.22😂😂🤣",
+  "inFrom": "Ur edl🧡"
+};
+function setPreview(key,val){document.getElementById(fields[key]).textContent=val || defaults[key];}
+Object.keys(fields).forEach(key=>{
+ const el=document.getElementById(key);
+ el.value=defaults[key];
+ el.addEventListener("input",()=>setPreview(key,el.value));
+});
+function reveal(){document.getElementById("surprise").style.display="block";}
+function resetFields(){
+ Object.keys(fields).forEach(key=>{document.getElementById(key).value=defaults[key];setPreview(key,defaults[key]);});
+ document.getElementById("inFrom").value="";
+ document.getElementById("linkStatus").textContent="";
+}
+function makeLink(){
+ const data={};
+ Object.keys(fields).forEach(key=>data[key]=document.getElementById(key).value);
+ data.inFrom=document.getElementById("inFrom").value;
+ const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+ const link=location.href.split("#")[0]+"#"+encoded;
+ if(navigator.clipboard && navigator.clipboard.writeText){
+   navigator.clipboard.writeText(link).then(()=>document.getElementById("linkStatus").textContent="Your shareable birthday link has been copied! Paste it into WhatsApp or Telegram.").catch(()=>showLink(link));
+ } else showLink(link);
+}
+function showLink(link){
+ const p=document.getElementById("linkStatus");p.textContent="Copy this link and send it: "+link;
+}
+function loadShared(){
+ if(!location.hash)return;
+ try{
+  const data=JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(1)))));
+  Object.keys(fields).forEach(key=>{if(data[key]!==undefined){document.getElementById(key).value=data[key];setPreview(key,data[key]);}});
+  if(data.inFrom){document.querySelector("footer").textContent="Made with love by "+data.inFrom+" • Faith, strength & good energy";}
+  document.getElementById("editor").classList.add("hidden");
+ }catch(e){}
+}
+loadShared();
+if (!location.hash) document.getElementById('editor').classList.add('hidden');
+</script>
+</body>
+</html>
